@@ -4,7 +4,9 @@
  */
 package bean;
 
+import db.Conexion;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -15,6 +17,10 @@ public class BaseDatos {
     private String nameDatabase;
     private int idUsuario;
     private Date fechaRegistro;
+    
+    public String getNameDatabase(){
+        return nameDatabase;
+    }
 
 
     public int getIdUsuario() {
@@ -49,13 +55,5 @@ public class BaseDatos {
         this.idUsuario = idUsuario;
         this.fechaRegistro = fechaRegistro;
     }
-    
-    
-    public static void main(String[] args){
-        Date hola =new Date();
-        BaseDatos b = new BaseDatos("carriito",1,hola);
-        System.out.println(b.toString());
-    }
-    
-    
+          
 }

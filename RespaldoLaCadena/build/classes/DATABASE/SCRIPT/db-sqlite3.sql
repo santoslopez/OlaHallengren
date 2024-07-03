@@ -6,8 +6,8 @@ CREATE TABLE TipoUsuario(
 
 CREATE TABLE Usuario(
     idUsuario INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario varchar(20) NOT NULL,
-    correo varchar(50) NOT NULL CHECK (correo LIKE '%_@_%._%'),
+    usuario varchar(20) NOT NULL UNIQUE,
+    correo varchar(50) NOT NULL CHECK (correo LIKE '%_@_%._%') UNIQUE,
     contrasena varchar(30) NOT NULL,
     estado char(1) NOT NULL DEFAULT 'A',
     fechaRegistro date NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE Usuario(
 
 CREATE TABLE BaseDatos(
     idDatabase INTEGER PRIMARY KEY AUTOINCREMENT,
-    nameDatabase VARCHAR(50) NOT NULL,
+    nameDatabase VARCHAR(50) NOT NULL UNIQUE,
     idUsuario int NOT NULL,
     fechaRegistro datetime NOT NULL, 
     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
@@ -25,7 +25,7 @@ CREATE TABLE BaseDatos(
 
 CREATE TABLE TipoCopia(
     idTipoCopia INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombreCopia VARCHAR(20) NOT NULL
+    nombreCopia VARCHAR(20) NOT NULL CHECK (nombreCopia IN ('FULL', 'Differential', 'Transaction Log'))
 );
 
 -- Almacena los días de la semana
