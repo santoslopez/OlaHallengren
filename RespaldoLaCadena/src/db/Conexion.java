@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 public class Conexion {    
@@ -21,7 +23,9 @@ public class Conexion {
     private Connection conection;
     private Statement statement;
 
-    
+    private ImageIcon iconError = new ImageIcon("src/img/close.png");
+    private ImageIcon iconConfirm = new ImageIcon("src/img/confirm.png");
+
     public static synchronized Conexion getInstancia(){
         if(instancia==null){
             instancia=new Conexion();
@@ -63,8 +67,12 @@ public class Conexion {
     public void ejecutarSentencia(String sentencia){
         try{
             statement.execute(sentencia);
+            JOptionPane.showMessageDialog(null,"Operación exitosa.","Mensaje",JOptionPane.INFORMATION_MESSAGE,iconConfirm);
+
         }catch(SQLException ex){
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"No se efectuo la consulta con exito."+ex.getMessage(),"Error: ",JOptionPane.ERROR_MESSAGE,iconError);
+
+            
         }
     }
     
@@ -92,7 +100,7 @@ public class Conexion {
         }
     }
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Conexion conexion = Conexion.getInstancia();
         if (conexion.isConexionExitosa()) {
             System.out.println("Conexión exitosa");
@@ -100,6 +108,6 @@ public class Conexion {
             System.out.println("Conexión fallida");
         }
         conexion.cerrarConexion();
-    }
+    }*/
 
 }

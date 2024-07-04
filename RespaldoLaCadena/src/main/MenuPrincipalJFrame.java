@@ -4,19 +4,44 @@
  */
 package main;
 
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+import javax.swing.ImageIcon;
+import jinternal.JInternalRegistrarUsuario;
+import jinternal.JInternalFrameCrearCopiaSeguridad;
+import jinternal.JInternalDatabase;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import jinternal.JInternalFrameListadoUsuarios;
+import jinternal.JInternalFrameTipoCopia;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
  *
  * @author santoslopeztzoy
  */
 public class MenuPrincipalJFrame extends javax.swing.JFrame {
-    private JInternalDatabase j;
+        private ImageIcon icon = new ImageIcon("src/img/confirm.png");
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        // Obtener ancho y alto
+        int ancho = screenSize.width;
+        int alto = screenSize.height;
+       
+    //private JInternalDatabase j;
     /**
      * Creates new form MenuPrincipalJFrame
      */
     public MenuPrincipalJFrame() {
         initComponents();
+        
+        // tamaño default
+        this.setSize(ancho-100,alto-100);
+        
+// centrar
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -29,39 +54,86 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
+        jPanelTitulo = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        jMenuBaseDatos = new javax.swing.JMenu();
+        jMenuItemRegistrarBaseDatos = new javax.swing.JMenuItem();
+        jMenuItemListadoBaseDatos = new javax.swing.JMenuItem();
+        jMenuUsuarios = new javax.swing.JMenu();
+        jMenuItemJinternalRegistrarUsuario = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuCopiaSeguridad = new javax.swing.JMenu();
+        jMenuItemTipoCopia = new javax.swing.JMenuItem();
+        jMenuItemCrearCopiaSeguridad = new javax.swing.JMenuItem();
+        jMenuItemEliminarCopiaSeguridad = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu - Administrador");
+
+        jPanelTitulo.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("FERRETERIA LA CADENA");
+
+        javax.swing.GroupLayout jPanelTituloLayout = new javax.swing.GroupLayout(jPanelTitulo);
+        jPanelTitulo.setLayout(jPanelTituloLayout);
+        jPanelTituloLayout.setHorizontalGroup(
+            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+        );
+        jPanelTituloLayout.setVerticalGroup(
+            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+        );
+
+        escritorio.setLayer(jPanelTitulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addComponent(jPanelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 226, Short.MAX_VALUE))
         );
 
-        jMenu2.setText("BASE DATOS");
+        jMenuBaseDatos.setText("BASE DATOS");
 
-        jMenuItem3.setText("Agregar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemRegistrarBaseDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add-button.png"))); // NOI18N
+        jMenuItemRegistrarBaseDatos.setText("Registrar");
+        jMenuItemRegistrarBaseDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuItemRegistrarBaseDatosActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        jMenuBaseDatos.add(jMenuItemRegistrarBaseDatos);
 
-        jMenuBar1.add(jMenu2);
+        jMenuItemListadoBaseDatos.setText("Listado base de datos");
+        jMenuItemListadoBaseDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemListadoBaseDatosActionPerformed(evt);
+            }
+        });
+        jMenuBaseDatos.add(jMenuItemListadoBaseDatos);
 
-        jMenu1.setText("USUARIOS");
+        jMenuBar1.add(jMenuBaseDatos);
+
+        jMenuUsuarios.setText("USUARIOS");
+
+        jMenuItemJinternalRegistrarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add-button.png"))); // NOI18N
+        jMenuItemJinternalRegistrarUsuario.setText("Registrar");
+        jMenuItemJinternalRegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemJinternalRegistrarUsuarioActionPerformed(evt);
+            }
+        });
+        jMenuUsuarios.add(jMenuItemJinternalRegistrarUsuario);
 
         jMenuItem1.setText("Listado usuarios");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -69,12 +141,38 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenuUsuarios.add(jMenuItem1);
 
-        jMenuItem2.setText("jMenuItem2");
-        jMenu1.add(jMenuItem2);
+        jMenuBar1.add(jMenuUsuarios);
 
-        jMenuBar1.add(jMenu1);
+        jMenuCopiaSeguridad.setText("COPIA SEGURIDAD");
+
+        jMenuItemTipoCopia.setText("Tipo copia");
+        jMenuItemTipoCopia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTipoCopiaActionPerformed(evt);
+            }
+        });
+        jMenuCopiaSeguridad.add(jMenuItemTipoCopia);
+
+        jMenuItemCrearCopiaSeguridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backup.png"))); // NOI18N
+        jMenuItemCrearCopiaSeguridad.setText("Crear copia seguridad");
+        jMenuItemCrearCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCrearCopiaSeguridadActionPerformed(evt);
+            }
+        });
+        jMenuCopiaSeguridad.add(jMenuItemCrearCopiaSeguridad);
+
+        jMenuItemEliminarCopiaSeguridad.setText("Eliminar copias antiguas");
+        jMenuItemEliminarCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEliminarCopiaSeguridadActionPerformed(evt);
+            }
+        });
+        jMenuCopiaSeguridad.add(jMenuItemEliminarCopiaSeguridad);
+
+        jMenuBar1.add(jMenuCopiaSeguridad);
 
         setJMenuBar(jMenuBar1);
 
@@ -96,15 +194,133 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+ 
+    
+    private void jMenuItemRegistrarBaseDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarBaseDatosActionPerformed
         // TODO add your handling code here:
         if(!escritorio.isAncestorOf(JInternalDatabase.getInstancia())){
             escritorio.add(JInternalDatabase.getInstancia());
             JInternalDatabase.getInstancia().setVisible(true);
+            // centrar
+            JInternalDatabase.getInstancia().setLocation(
+                (escritorio.getWidth() - JInternalDatabase.getInstancia().getWidth()) / 2,
+                (escritorio.getHeight() - JInternalDatabase.getInstancia().getHeight()) / 2
+            );        
         }else{
             escritorio.setSelectedFrame(JInternalDatabase.getInstancia());
         }       
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jMenuItemRegistrarBaseDatosActionPerformed
+
+    private void jMenuItemJinternalRegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemJinternalRegistrarUsuarioActionPerformed
+        // TODO add your handling code here:
+        if(!escritorio.isAncestorOf(JInternalRegistrarUsuario.getInstancia())){
+            escritorio.add(JInternalRegistrarUsuario.getInstancia());
+            JInternalRegistrarUsuario.getInstancia().setVisible(true);
+            // centrar
+            JInternalRegistrarUsuario.getInstancia().setLocation(
+            (escritorio.getWidth() - JInternalRegistrarUsuario.getInstancia().getWidth())/2,
+            (escritorio.getHeight() - JInternalRegistrarUsuario.getInstancia().getWidth())/2
+            );
+        }else{
+            escritorio.setSelectedFrame(JInternalRegistrarUsuario.getInstancia());
+        }
+    }//GEN-LAST:event_jMenuItemJinternalRegistrarUsuarioActionPerformed
+
+    private void jMenuItemCrearCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCrearCopiaSeguridadActionPerformed
+        // TODO add your handling code here:
+        if(!escritorio.isAncestorOf(JInternalFrameCrearCopiaSeguridad.getInstancia())){
+            escritorio.add(JInternalFrameCrearCopiaSeguridad.getInstancia());
+            JInternalFrameCrearCopiaSeguridad.getInstancia().setVisible(true);
+            // centrar
+            JInternalFrameCrearCopiaSeguridad.getInstancia().setLocation(
+            (escritorio.getWidth() - JInternalFrameCrearCopiaSeguridad.getInstancia().getWidth())/2,
+            (escritorio.getHeight() - JInternalFrameCrearCopiaSeguridad.getInstancia().getWidth())/2
+            );
+        }else{
+            escritorio.setSelectedFrame(JInternalFrameCrearCopiaSeguridad.getInstancia());
+        }
+    }//GEN-LAST:event_jMenuItemCrearCopiaSeguridadActionPerformed
+
+    private void jMenuItemEliminarCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarCopiaSeguridadActionPerformed
+        // TODO add your handling code here:
+            // Crear un objeto File que representa el directorio actual (donde se está ejecutando el programa)
+    // Especificar el directorio donde están las copias de seguridad (ruta de Windows)
+   // Especificar el directorio donde están las copias de seguridad (ruta de Windows sin secuencias de escape)
+    String windowsPath = """
+        C:\\Program Files\\Microsoft SQL Server\\MSSQL15.MSSQLSERVER\\MSSQL\\Backup\\
+        """;
+        
+        // Crear un objeto File con la ruta de Windows especificada
+    File dir = new File(windowsPath);
+    // Verificar que el directorio existe
+    if (!dir.exists()) {
+        System.out.println("El directorio especificado no existe: " + dir.getAbsolutePath());
+        return;
+    }
+
+    // Listar todos los archivos en el directorio especificado que terminan con ".bak"
+    File[] files = dir.listFiles((dir1, name) -> name.endsWith(".bak"));
+
+    // Verificar si se encontraron archivos
+    if (files == null || files.length == 0) {
+        System.out.println("No se encontraron archivos .bak en el directorio: " + dir.getAbsolutePath());
+        return;
+    }
+
+    // Calcular el tiempo límite para determinar qué archivos son más antiguos de 3 horas
+    long cutoff = System.currentTimeMillis() - TimeUnit.HOURS.toMillis(3);
+    System.out.println("Tiempo de corte: " + cutoff);
+
+    // Iterar a través de los archivos encontrados
+    for (File file : files) {
+        System.out.println("Revisando archivo: " + file.getName() + ", última modificación: " + file.lastModified());
+
+        // Verificar si la última modificación del archivo es anterior al tiempo límite
+        if (file.lastModified() < cutoff) {
+            // Intentar eliminar el archivo
+            if (file.delete()) {
+                // Imprimir un mensaje en la consola si el archivo fue eliminado exitosamente
+                System.out.println("Eliminado: " + file.getName());
+            } else {
+                // Imprimir un mensaje en la consola si el archivo no pudo ser eliminado
+                System.out.println("No se pudo eliminar: " + file.getName());
+            }
+        } else {
+            System.out.println("El archivo " + file.getName() + " no es más antiguo de 3 horas.");
+        }
+    }
+    
+    }//GEN-LAST:event_jMenuItemEliminarCopiaSeguridadActionPerformed
+
+    private void jMenuItemTipoCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTipoCopiaActionPerformed
+        // TODO add your handling code here:
+        if(!escritorio.isAncestorOf(JInternalFrameTipoCopia.getInstancia())){
+            escritorio.add(JInternalFrameTipoCopia.getInstancia());
+            JInternalFrameTipoCopia.getInstancia().setVisible(true);
+            // centrar
+            JInternalFrameTipoCopia.getInstancia().setLocation(
+            (escritorio.getWidth() - JInternalFrameTipoCopia.getInstancia().getWidth())/2,
+            (escritorio.getHeight() - JInternalFrameTipoCopia.getInstancia().getWidth())/2
+            );
+        }else{
+            escritorio.setSelectedFrame(JInternalFrameTipoCopia.getInstancia());
+        }
+    }//GEN-LAST:event_jMenuItemTipoCopiaActionPerformed
+
+    private void jMenuItemListadoBaseDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListadoBaseDatosActionPerformed
+        // TODO add your handling code here:
+        if(!escritorio.isAncestorOf(JInternalFrameListadoUsuarios.getInstancia())){
+            escritorio.add(JInternalFrameListadoUsuarios.getInstancia());
+            JInternalFrameListadoUsuarios.getInstancia().setVisible(true);
+            // centrar
+            JInternalFrameListadoUsuarios.getInstancia().setLocation(
+            (escritorio.getWidth() - JInternalFrameListadoUsuarios.getInstancia().getWidth())/2,
+            (escritorio.getHeight() - JInternalFrameListadoUsuarios.getInstancia().getWidth())/2
+            );
+        }else{
+            escritorio.setSelectedFrame(JInternalFrameListadoUsuarios.getInstancia());
+        }
+    }//GEN-LAST:event_jMenuItemListadoBaseDatosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,11 +360,18 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuBaseDatos;
+    private javax.swing.JMenu jMenuCopiaSeguridad;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItemCrearCopiaSeguridad;
+    private javax.swing.JMenuItem jMenuItemEliminarCopiaSeguridad;
+    private javax.swing.JMenuItem jMenuItemJinternalRegistrarUsuario;
+    private javax.swing.JMenuItem jMenuItemListadoBaseDatos;
+    private javax.swing.JMenuItem jMenuItemRegistrarBaseDatos;
+    private javax.swing.JMenuItem jMenuItemTipoCopia;
+    private javax.swing.JMenu jMenuUsuarios;
+    private javax.swing.JPanel jPanelTitulo;
     // End of variables declaration//GEN-END:variables
 }
