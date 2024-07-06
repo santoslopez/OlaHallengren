@@ -15,12 +15,18 @@ public class TipoCopia {
     public int getIdTipoCopia(){
         return idTipoCopia;
     }
-    
+     public String getNombreCopia(){
+        return nombreCopia;
+    }
     public void setTipoCopia(String nombreCopia){
         this.nombreCopia=nombreCopia;
     }
     
     public TipoCopia(String nombreCopia){
+        this.nombreCopia=nombreCopia;
+    }
+    public TipoCopia(int idTipoCopia,String nombreCopia){
+        this.idTipoCopia=idTipoCopia;
         this.nombreCopia=nombreCopia;
     }
 
@@ -31,8 +37,8 @@ public class TipoCopia {
         
     
     
-    public static void main(String args[]){
+    /*public static void main(String args[]){
         TipoCopia tipo = new TipoCopia("hola");
         System.out.println(tipo.toString());
-    }
+    }*/
 }

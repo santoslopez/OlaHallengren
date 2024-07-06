@@ -39,13 +39,13 @@ public class TipoUsuario {
         this.nombreTipo = nombreTipo;
     }
         
-    public static void main(String args[]){
+    /*public static void main(String args[]){
         System.out.println("estoy aqui");
         TipoUsuario t = new TipoUsuario("adminx8");
         String sentencia = "INSERT INTO TipoUsuario (nombreTipo) VALUES ('" + t.getNombreTipo() + "')";
        
         Conexion conexion = Conexion.getInstancia();
         conexion.ejecutarSentencia(sentencia);
-    }
+    }*/
     
 }

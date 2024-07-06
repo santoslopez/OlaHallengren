@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
 
 
 public class Conexion {    
@@ -23,6 +24,8 @@ public class Conexion {
     private Connection conection;
     private Statement statement;
 
+    private PreparedStatement preparedStatement;
+    
     private ImageIcon iconError = new ImageIcon("src/img/close.png");
     private ImageIcon iconConfirm = new ImageIcon("src/img/confirm.png");
 
@@ -55,6 +58,11 @@ public class Conexion {
       
         
     }
+    
+    public Connection getConection(){
+        return conection;
+    }
+    
     public ResultSet hacerConsulta(String consulta){
         ResultSet resultSet = null;
         try{
@@ -75,6 +83,7 @@ public class Conexion {
             
         }
     }
+
     
     public boolean isConexionExitosa() {
         try {

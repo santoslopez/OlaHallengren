@@ -25,13 +25,13 @@ CREATE TABLE BaseDatos(
 
 CREATE TABLE TipoCopia(
     idTipoCopia INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombreCopia VARCHAR(20) NOT NULL CHECK (nombreCopia IN ('FULL', 'Differential', 'Transaction Log'))
+    nombreCopia VARCHAR(20) UNIQUE NOT NULL CHECK (nombreCopia IN ('FULL', 'Differential', 'Transaction Log'))
 );
 
 -- Almacena los días de la semana
 CREATE TABLE Dia(
     idDia INTEGER PRIMARY KEY AUTOINCREMENT,
-    dia varchar(10) NOT NULL
+    dia varchar(10) NOT NULL UNIQUE
 );
 
 CREATE TABLE FrecuenciaCopia (

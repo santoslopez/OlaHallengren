@@ -51,11 +51,13 @@ public class JInternalFrameListadoUsuarios extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableListadoBaseDatos = new javax.swing.JTable();
 
-        setTitle("Listado de base de datos");
+        setTitle("Listado de usuarios");
+        setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Base de datos");
+        jLabel1.setText("Listado de usuarios");
 
         modelo = new ModeloDeUsuario();
         jTableListadoBaseDatos.setModel(modelo);

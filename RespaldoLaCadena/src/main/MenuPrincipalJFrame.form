@@ -12,20 +12,12 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemRegistrarBaseDatos">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/add-button.png"/>
+                  <Image iconType="3" name="/img/add.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registrar"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemRegistrarBaseDatosActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemListadoBaseDatos">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Listado base de datos"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemListadoBaseDatosActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -38,7 +30,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemJinternalRegistrarUsuario">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/add-button.png"/>
+                  <Image iconType="3" name="/img/add.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registrar"/>
               </Properties>
@@ -46,12 +38,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemJinternalRegistrarUsuarioActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemListarUsuarios">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/phone-book.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Listado usuarios"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemListarUsuariosActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -63,10 +58,24 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemTipoCopia">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo copia"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/add.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Registrar copia"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemTipoCopiaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemListadoCopias">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/list.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Listado copias"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemListadoCopiasActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemCrearCopiaSeguridad">
@@ -82,11 +91,26 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEliminarCopiaSeguridad">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/delete.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Eliminar copias antiguas"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemEliminarCopiaSeguridadActionPerformed"/>
               </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="PERFIL"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Configuracion"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
