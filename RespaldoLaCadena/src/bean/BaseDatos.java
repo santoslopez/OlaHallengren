@@ -18,6 +18,8 @@ public class BaseDatos {
     private int idUsuario;
     private Date fechaRegistro;
     
+    
+    
     public String getNameDatabase(){
         return nameDatabase;
     }

@@ -107,12 +107,15 @@ public class JInternalFrameTipoCopia extends javax.swing.JInternalFrame {
                 );
         
         String tipoCopia = (String)jComboBoxTipoCopia.getSelectedItem();
-        String sentencia = "INSERT INTO TipoCopia (nombreCopia) VALUES ('"
-                +tipoCopia+"')";
-            JOptionPane.showConfirmDialog(null, "xxxx"+tipoCopia,"Mensaje",JOptionPane.ERROR_MESSAGE);
+      
+        String sentencia = "INSERT INTO TipoCopia (nombreCopia) VALUES(?)";
+        Object[] params={tipoCopia};
+        //JOptionPane.showConfirmDialog(null, "xxxx"+tipoCopia,"Mensaje",JOptionPane.ERROR_MESSAGE);
 
         if (confirmarGuardar==JOptionPane.YES_OPTION){
-            Conexion.getInstancia().ejecutarSentencia(sentencia);
+          
+            Conexion.getInstancia().ejecutarActualizacionPreparedStatement(sentencia, params);
+            
         }else{
             JOptionPane.showConfirmDialog(null, "Tipo de copia no guardado","Mensaje",JOptionPane.ERROR_MESSAGE);
         }

@@ -41,7 +41,10 @@ public class ManejadorTipoCopia {
     public ArrayList<TipoCopia> listarTipoCopiasGuardadas(){
         TipoCopia tipoCopia = null;
         mostrarTipoCopias.removeAll(mostrarTipoCopias);
-        ResultSet consulta = Conexion.getInstancia().hacerConsulta("SELECT * FROM TipoCopia");
+        
+        String query = "SELECT * FROM TipoCopia";
+        Object[] params={};
+        ResultSet consulta = Conexion.getInstancia().hacerConsultaPreparedStatement(query,params);
         try{
             while(consulta.next()){
                 tipoCopia = new TipoCopia(

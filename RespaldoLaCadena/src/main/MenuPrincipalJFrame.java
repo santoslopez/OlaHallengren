@@ -20,6 +20,7 @@ import java.awt.Toolkit;
 import jinternal.JInternalFrameListadoCopias;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import jinternal.JInternalFrameListadoBaseDatos;
 
 /**
  *
@@ -67,6 +68,7 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuBaseDatos = new javax.swing.JMenu();
         jMenuItemRegistrarBaseDatos = new javax.swing.JMenuItem();
+        jMenuItemListadoBaseDatos = new javax.swing.JMenuItem();
         jMenuUsuarios = new javax.swing.JMenu();
         jMenuItemJinternalRegistrarUsuario = new javax.swing.JMenuItem();
         jMenuItemListarUsuarios = new javax.swing.JMenuItem();
@@ -123,6 +125,15 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
             }
         });
         jMenuBaseDatos.add(jMenuItemRegistrarBaseDatos);
+
+        jMenuItemListadoBaseDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/list-2.png"))); // NOI18N
+        jMenuItemListadoBaseDatos.setText("Listado de base de datos");
+        jMenuItemListadoBaseDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemListadoBaseDatosActionPerformed(evt);
+            }
+        });
+        jMenuBaseDatos.add(jMenuItemListadoBaseDatos);
 
         jMenuBar1.add(jMenuBaseDatos);
 
@@ -232,16 +243,17 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
     
     private void jMenuItemRegistrarBaseDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarBaseDatosActionPerformed
         // TODO add your handling code here:
-        if(!escritorio.isAncestorOf(JInternalDatabase.getInstancia())){
-            escritorio.add(JInternalDatabase.getInstancia());
-            JInternalDatabase.getInstancia().setVisible(true);
+        JInternalDatabase j = new JInternalDatabase();
+        if(!escritorio.isAncestorOf(j)){
+            escritorio.add(j);
+            j.setVisible(true);
             // centrar
-            JInternalDatabase.getInstancia().setLocation(
+            j.setLocation(
                 (escritorio.getWidth() - JInternalDatabase.getInstancia().getWidth()) / 2,
                 (escritorio.getHeight() - JInternalDatabase.getInstancia().getHeight()) / 2
             );        
         }else{
-            escritorio.setSelectedFrame(JInternalDatabase.getInstancia());
+            escritorio.setSelectedFrame(j);
         }       
     }//GEN-LAST:event_jMenuItemRegistrarBaseDatosActionPerformed
 
@@ -382,6 +394,24 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItemListadoCopiasActionPerformed
 
+    private void jMenuItemListadoBaseDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListadoBaseDatosActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameListadoBaseDatos j = new JInternalFrameListadoBaseDatos();
+       
+        if(!escritorio.isAncestorOf(j)){
+            escritorio.add(j);
+            j.setVisible(true);
+            // centrar
+            j.setLocation(
+            (escritorio.getWidth() - j.getWidth())/2,
+            (escritorio.getHeight() - j.getWidth())/2
+            );
+        }else{
+            escritorio.setSelectedFrame(j);
+        }
+        
+    }//GEN-LAST:event_jMenuItemListadoBaseDatosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -429,6 +459,7 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemCrearCopiaSeguridad;
     private javax.swing.JMenuItem jMenuItemEliminarCopiaSeguridad;
     private javax.swing.JMenuItem jMenuItemJinternalRegistrarUsuario;
+    private javax.swing.JMenuItem jMenuItemListadoBaseDatos;
     private javax.swing.JMenuItem jMenuItemListadoCopias;
     private javax.swing.JMenuItem jMenuItemListarUsuarios;
     private javax.swing.JMenuItem jMenuItemRegistrarBaseDatos;

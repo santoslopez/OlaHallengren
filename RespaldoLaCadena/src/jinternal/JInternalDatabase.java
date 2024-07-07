@@ -148,13 +148,18 @@ public class JInternalDatabase extends javax.swing.JInternalFrame {
         
         if (confirmarGuardar==JOptionPane.YES_OPTION){
                 
-            String sentencia = "INSERT INTO BaseDatos(nameDatabase,idUsuario,fechaRegistro) VALUES('"
+            /*String sentencia = "INSERT INTO BaseDatos(nameDatabase,idUsuario,fechaRegistro) VALUES('"
                 +nameDatabase+"','"
                 +idUsuario+"','"
                 +new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(hola)
-                +"')";
+                +"')";*/
             
-            Conexion.getInstancia().ejecutarSentencia(sentencia);
+            String sentencia = "INSERT INTO BaseDatos(nameDatabase,idUsuario,fechaRegistro) VALUES(?,?,?)";
+            Object[] params = {nameDatabase,idUsuario,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(hola)};
+            
+            //Conexion.getInstancia().ejecutarSentencia(sentencia);
+            Conexion.getInstancia().ejecutarActualizacionPreparedStatement(sentencia,params);
+            
             JOptionPane.showMessageDialog(null, "Base de datos agregada exitosamente.");
             txtNombreBasedatos.setText("");
             // Cerrar el JInternalFrame

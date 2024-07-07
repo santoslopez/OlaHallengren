@@ -62,28 +62,37 @@ public class Conexion {
     public Connection getConection(){
         return conection;
     }
-    
-    public ResultSet hacerConsulta(String consulta){
+        
+    // Hacer consultas SELECT y evitar inyección SQL
+    public ResultSet hacerConsultaPreparedStatement(String consulta, Object[] params) {
         ResultSet resultSet = null;
-        try{
-            resultSet = statement.executeQuery(consulta);
-        }catch(SQLException exc){
-            exc.printStackTrace();
+        try {
+            PreparedStatement prep = conection.prepareStatement(consulta);
+            for (int i = 0; i < params.length; i++) {
+                prep.setObject(i + 1, params[i]);
+            }
+            resultSet = prep.executeQuery();
+        } catch (SQLException exc) {
+            JOptionPane.showMessageDialog(null, "Se produjo el siguiente error: " + exc.getMessage(), "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
+
+            //exc.printStackTrace();
         }
         return resultSet;
-    }  
-    public void ejecutarSentencia(String sentencia){
-        try{
-            statement.execute(sentencia);
-            JOptionPane.showMessageDialog(null,"Operación exitosa.","Mensaje",JOptionPane.INFORMATION_MESSAGE,iconConfirm);
-
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null,"No se efectuo la consulta con exito."+ex.getMessage(),"Error: ",JOptionPane.ERROR_MESSAGE,iconError);
-
-            
-        }
     }
 
+    // insert, update y delete y evitar inyección SQL
+    public void ejecutarActualizacionPreparedStatement(String consulta, Object[] params) {
+        try (PreparedStatement prep = conection.prepareStatement(consulta)) {
+            for (int i = 0; i < params.length; i++) {
+                prep.setObject(i + 1, params[i]);
+            }
+            prep.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Operación exitosa.", "Mensaje", JOptionPane.INFORMATION_MESSAGE, iconConfirm);
+        } catch (SQLException exc) {
+            JOptionPane.showMessageDialog(null, "No se efectuo la consulta con éxito: " + exc.getMessage(), "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
+            exc.printStackTrace();
+        }
+    }
     
     public boolean isConexionExitosa() {
         try {

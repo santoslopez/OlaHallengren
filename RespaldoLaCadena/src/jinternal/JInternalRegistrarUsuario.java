@@ -174,19 +174,16 @@ public class JInternalRegistrarUsuario extends javax.swing.JInternalFrame {
                  JOptionPane.QUESTION_MESSAGE);
         
         if (confirmarGuardar==JOptionPane.YES_OPTION){
-            String sentencia = "INSERT INTO Usuario (usuario,correo,contrasena,estado,fechaRegistro,idTipoUsuario) VALUES ('"
-                            + usuario + "', '"
-                            + correo + "', '"
-                            + contrase + "', '"
-                            + estadoActivo + "', '"
-                            + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fechaActual) + "', '"
+            
+            
+            String sentencia = "INSERT INTO Usuario (usuario,correo,contrasena,estado,fechaRegistro,idTipoUsuario) VALUES (?,?,?,?,?,?)";
 
-                            +codUsuarioDefault+
-                    "')";
-
-            Conexion.getInstancia().ejecutarSentencia(sentencia);  
+           
+            Object[] params = {usuario,correo,contrase,estadoActivo,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fechaActual),"1"};
+            Conexion.getInstancia().ejecutarActualizacionPreparedStatement(sentencia,params);
+            
             //JOptionPane.showMessageDialog(null, "Base de datos agregada exitosamente.");
-            //JOptionPane.showMessageDialog(null,"Registro exitoso","Base de datos guardado",JOptionPane.INFORMATION_MESSAGE,iconConfirm);
+            JOptionPane.showMessageDialog(null,"Registro exitoso","Base de datos guardado",JOptionPane.INFORMATION_MESSAGE,iconConfirm);
 
             // limpiando caja de texto
             txtNombreUsuario.setText("");

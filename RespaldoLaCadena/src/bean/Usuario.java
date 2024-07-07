@@ -93,33 +93,5 @@ public class Usuario {
                ", Fecha: " + fechaRegistro.toString();
     }
     
-    public static void main(String args[]){
-        Date fechaActual = new Date();
-        
-        // Definimos el formato deseado
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
-        // Convertir a string la fecha
-        //String convertFecha = dateFormat.format(fechaActual);
-        int codigoUsuarioDefault = 2;// no es administrador       
-        Usuario usuario = new Usuario("santos","santos.lopez@galileo.edu","pruebadefuego",'A',fechaActual,codigoUsuarioDefault);
-
-        System.out.println("estoy aqui");
-        
-       
-        //String sentencia = "INSERT INTO Usuario (usuario, correo, contraseña, estado, fechaRegistro) VALUES (?, ?, ?, ?, ?)";
-        String sentencia = "INSERT INTO Usuario (usuario,correo,contrasena,estado,fechaRegistro,idTipoUsuario) VALUES ('"
-                        + usuario.getNombreUsuario() + "', '"
-                        + usuario.getEmail() + "', '"
-                        + usuario.getPassword() + "', '"
-                        + usuario.getEstado() + "', '"
-                        + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(usuario.getFechaRegistro()) + "', '"
-                
-                        +codigoUsuarioDefault+
-                "')";
-
-        
-        Conexion conexion = Conexion.getInstancia();
-        conexion.ejecutarSentencia(sentencia);
-    }
+   
 }

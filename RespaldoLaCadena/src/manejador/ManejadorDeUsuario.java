@@ -11,11 +11,11 @@ package manejador;
 import bean.Usuario;
 import db.Conexion;
 import java.util.ArrayList;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.SQLException;
+//import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.util.Date;
 
 
@@ -43,7 +43,11 @@ public class ManejadorDeUsuario {
     public ArrayList<Usuario> listarUsuariosGuardados(){
         Usuario usuario = null;
         mostrarUsuario.removeAll(mostrarUsuario);
-        ResultSet consulta = Conexion.getInstancia().hacerConsulta("SELECT * FROM usuario");
+        
+        //ResultSet consulta = Conexion.getInstancia().hacerConsulta("SELECT * FROM usuario");
+        String query = "SELECT * FROM Usuario";
+        Object[] params={};
+        ResultSet consulta = Conexion.getInstancia().hacerConsultaPreparedStatement(query,params);        
         
         try{
             while(consulta.next()){

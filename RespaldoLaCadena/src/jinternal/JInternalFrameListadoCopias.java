@@ -13,13 +13,13 @@ import modelo.ModeloTipoCopia;
  */
 public class JInternalFrameListadoCopias extends javax.swing.JInternalFrame {
     private ModeloTipoCopia modelo;
-    private static  JInternalFrameListadoCopias instancia;
+    /*private static  JInternalFrameListadoCopias instancia;
     public static JInternalFrameListadoCopias getInstancia(){
         if(instancia==null){
             instancia=new  JInternalFrameListadoCopias();
         }
         return instancia;
-    }
+    }*/
     /**
      * Creates new form JInternalFrameListadoCopias
      */
@@ -45,7 +45,10 @@ public class JInternalFrameListadoCopias extends javax.swing.JInternalFrame {
 
         setTitle("Listado tipo de copias");
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Listado de copias");
 
         modelo = new ModeloTipoCopia();
         jTableListadoTipoCopia.setModel(modelo);
@@ -61,8 +64,8 @@ public class JInternalFrameListadoCopias extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
