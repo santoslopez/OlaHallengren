@@ -72,4 +72,37 @@ public class ManejadorDeUsuario {
         }
         return mostrarUsuario;
     }
+    
+    public Usuario iniciarSesion(String user,String password){
+        Usuario usuario = null;
+        String query = "SELECT * FROM Usuario WHERE usuario=? AND contrasena=? AND idTipoUsuario=2";
+        
+        Object[] params={user,password};
+        ResultSet consulta = Conexion.getInstancia().hacerConsultaPreparedStatement(query,params);
+        
+            if(consulta!=null){
+                try{  
+                    while(consulta.next()){
+                        char estado = consulta.getString("estado").charAt(0);
+                        usuario = new Usuario(
+                                consulta.getString("usuario"),
+                                consulta.getString("correo"),
+                                consulta.getString("contrasena"),
+                                estado
+                                
+                                
+                        );
+                        
+                    }                  
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
+
+            }else{
+                usuario = null;
+            }
+
+        
+        return usuario;
+    }
 }

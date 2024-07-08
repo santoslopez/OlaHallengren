@@ -42,11 +42,23 @@ public class Conexion {
             //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
             Class.forName("org.sqlite.JDBC").newInstance();
         }catch(InstantiationException ex1){
-           ex1.printStackTrace();
+           //ex1.printStackTrace();
+            String mensaje="<html><body style='width: 300px;'>" +
+                      "Se produjo el siguiente error: " + ex1.getMessage() +
+                      "</body></html>";       
+           JOptionPane.showMessageDialog(null,mensaje, "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
         }catch(IllegalAccessException illegalAccessException){
-            illegalAccessException.printStackTrace();
+            //illegalAccessException.printStackTrace();
+            String mensaje="<html><body style='width: 300px;'>" +
+                      "Se produjo el siguiente error: " + illegalAccessException.getMessage() +
+                      "</body></html>";       
+           JOptionPane.showMessageDialog(null,mensaje, "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
         }catch(ClassNotFoundException classNotFoundException){
-            classNotFoundException.printStackTrace();
+            //classNotFoundException.printStackTrace();
+             String mensaje="<html><body style='width: 300px;'>" +
+                      "Se produjo el siguiente error: " + classNotFoundException.getMessage() +
+                      "</body></html>";       
+           JOptionPane.showMessageDialog(null,mensaje, "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
         }
         try{
             conection = DriverManager.getConnection("jdbc:sqlite:src/DATABASE/DB.db");
@@ -73,7 +85,10 @@ public class Conexion {
             }
             resultSet = prep.executeQuery();
         } catch (SQLException exc) {
-            JOptionPane.showMessageDialog(null, "Se produjo el siguiente error: " + exc.getMessage(), "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
+            String mensaje="<html><body style='width: 300px;'>" +
+                      "Se produjo el siguiente error: " + exc.getMessage() +
+                      "</body></html>";
+            JOptionPane.showMessageDialog(null,mensaje, "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
 
             //exc.printStackTrace();
         }
@@ -87,10 +102,15 @@ public class Conexion {
                 prep.setObject(i + 1, params[i]);
             }
             prep.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Operación exitosa.", "Mensaje", JOptionPane.INFORMATION_MESSAGE, iconConfirm);
+            JOptionPane.showMessageDialog(null,"Operación exitosa.", "Mensaje", JOptionPane.INFORMATION_MESSAGE, iconConfirm);
         } catch (SQLException exc) {
-            JOptionPane.showMessageDialog(null, "No se efectuo la consulta con éxito: " + exc.getMessage(), "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
-            exc.printStackTrace();
+            //JOptionPane.showMessageDialog(null, "No se efectuo la consulta con éxito: " + exc.getMessage(), "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
+            //exc.printStackTrace();
+            String mensaje="<html><body style='width: 300px;'>" +
+                      "Se produjo el siguiente error: " + exc.getMessage() +
+                      "</body></html>";
+            JOptionPane.showMessageDialog(null,mensaje, "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
+
         }
     }
     
@@ -117,15 +137,4 @@ public class Conexion {
             ex.printStackTrace();
         }
     }
-    
-    /*public static void main(String[] args) {
-        Conexion conexion = Conexion.getInstancia();
-        if (conexion.isConexionExitosa()) {
-            System.out.println("Conexión exitosa");
-        } else {
-            System.out.println("Conexión fallida");
-        }
-        conexion.cerrarConexion();
-    }*/
-
 }

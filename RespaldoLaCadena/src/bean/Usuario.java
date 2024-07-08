@@ -72,6 +72,10 @@ public class Usuario {
 
     }
     
+    public Usuario(){
+        
+    }
+    
     public Usuario(String nombreUsuario,String email,String password,char estado,Date fechaRegistro,int idTipoUsuario){
     //public Usuario(String nombreUsuario,String email,char estado,Date fechaRegistro,int idTipoUsuario){
 
@@ -83,6 +87,19 @@ public class Usuario {
         this.idTipoUsuario=idTipoUsuario;
 
     }
+    
+    public Usuario(String nombreUsuario,String email,String password,char estado){
+    //public Usuario(String nombreUsuario,String email,char estado,Date fechaRegistro,int idTipoUsuario){
+
+        this.nombreUsuario=nombreUsuario;
+        this.email=email;
+        this.password=password;
+        this.estado=estado;
+        //this.fechaRegistro=fechaRegistro;
+        //this.idTipoUsuario=idTipoUsuario;
+
+    }
+        
     
    @Override
    public String toString() {

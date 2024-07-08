@@ -107,55 +107,78 @@ public class JInternalFrameCrearCopiaSeguridad extends javax.swing.JInternalFram
 
         String user = "sa";
         String password = "Union2018";
-
+        Connection conn = null;
+        
+         Statement stmt = null;
+        
         try {
             // Cargar el driver JDBC
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             // Establecer la conexión
-            Connection conn = DriverManager.getConnection(url,user,password);
-            Statement stmt = conn.createStatement();
+            conn = DriverManager.getConnection(url,user,password);
+            
+            if(conn!=null && !conn.isClosed()){
+                JOptionPane.showMessageDialog(null,"xxxxxxx","Guardado",JOptionPane.INFORMATION_MESSAGE,icon);
 
-            // Ruta del archivo de respaldo en macOS
-            String backupFileName = "backup.bak";
-            String backupFilePath = backupFileName;
-            
-            Date date = new Date();
-            
-            // Definir formato que se necesita
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-            
-            // Convertir date a String
-            String convertirFormatoEsperado = formato.format(date);
-            
-            
-            String nameBackup = "BACKUP"+convertirFormatoEsperado+"-.bak";
-            
-            int confirmarCopiaSeguridad = JOptionPane.showConfirmDialog(null, "Confirmar","¿Deseas continuar con el respaldo de base de datos?",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    icon);
-            if (confirmarCopiaSeguridad==JOptionPane.YES_OPTION){
-                // Comando de respaldo
-                String backupSQL = "BACKUP DATABASE DANTAS TO DISK = '" + nameBackup + "' WITH INIT";
+                stmt = conn.createStatement();
 
-                // Ejecutar el comando de respaldo
-                stmt.executeUpdate(backupSQL);
-                //System.out.println("Copia de seguridad completada exitosamente en macOS en " + backupFilePath);
+                // Ruta del archivo de respaldo en macOS
+                String backupFileName = "backup.bak";
+                String backupFilePath = backupFileName;
 
-                JOptionPane.showMessageDialog(null,"Copia de seguridad generado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE,icon);
+                Date date = new Date();
 
-                // Cerrar la conexión y el statement
-                stmt.close();
-                conn.close();    
-                JInternalFrameCrearCopiaSeguridad.getInstancia().dispose();
+                // Definir formato que se necesita
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+
+                // Convertir date a String
+                String convertirFormatoEsperado = formato.format(date);
+
+
+                String nameBackup = "BACKUP"+convertirFormatoEsperado+"-.bak";
+
+                int confirmarCopiaSeguridad = JOptionPane.showConfirmDialog(null, "Confirmar","¿Deseas continuar con el respaldo de base de datos?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        icon);
+                if (confirmarCopiaSeguridad==JOptionPane.YES_OPTION){
+                    // Comando de respaldo
+                    String backupSQL = "BACKUP DATABASE DANTAS TO DISK = '" + nameBackup + "' WITH INIT";
+
+                    // Ejecutar el comando de respaldo
+                    stmt.executeUpdate(backupSQL);
+                    //System.out.println("Copia de seguridad completada exitosamente en macOS en " + backupFilePath);
+
+                    JOptionPane.showMessageDialog(null,"Copia de seguridad generado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE,icon);
+
+                    // Cerrar la conexión y el statement
+                    stmt.close();
+                    conn.close();    
+                    JInternalFrameCrearCopiaSeguridad.getInstancia().dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null,"Base de datos no se guardo","Error",JOptionPane.ERROR_MESSAGE,iconError);
+                }                
             }else{
-                JOptionPane.showMessageDialog(null,"Base de datos no se guardo","Error",JOptionPane.ERROR_MESSAGE,iconError);
+                JOptionPane.showMessageDialog(null,"Erro no se pudo establecer la conexión con el servidor","Error",JOptionPane.ERROR_MESSAGE,iconError);
             }
+            
 
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error realizando la copia de seguridad.");
+
+        } catch (ClassNotFoundException e) {
+            String mensaje="<html><body style='width: 300px;'>" +
+                      "Se produjo el siguiente error: " + e.getMessage() +
+                      "</body></html>";
+
+            //e.printStackTrace();
+            JOptionPane.showMessageDialog(null,mensaje,"Error ClassNotFound",JOptionPane.ERROR_MESSAGE,iconError);
+        } catch (SQLException ex) {
+            String mensaje="<html><body style='width: 300px;'>" +
+                      "Se produjo el siguiente error: " + ex.getMessage() +
+                      "</body></html>";
+            //System.out.println("Error realizando la copia de seguridad.");
+            JOptionPane.showMessageDialog(null,mensaje,"Error SQLException",JOptionPane.ERROR_MESSAGE,iconError);
+
         }
     }//GEN-LAST:event_jButtonGuardarCopiaSeguridadActionPerformed
 

@@ -27,6 +27,16 @@ import jinternal.JInternalFrameListadoBaseDatos;
  * @author santoslopeztzoy
  */
 public class MenuPrincipalJFrame extends javax.swing.JFrame {
+    // patron de diseno singleton para crear una sola instancia de la clase
+    private static MenuPrincipalJFrame instancia;
+    public static MenuPrincipalJFrame getInstancia(){
+        if(instancia==null){
+            instancia=new MenuPrincipalJFrame();
+        }
+        return instancia;
+    }
+    
+    
     private ImageIcon icon = new ImageIcon("src/img/confirm.png");
     
     private ImageIcon iconError = new ImageIcon("src/img/close.png");
@@ -341,13 +351,17 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
     private void jMenuItemTipoCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTipoCopiaActionPerformed
         // TODO add your handling code here:
         if(!escritorio.isAncestorOf(JInternalFrameTipoCopia.getInstancia())){
+
+ 
             escritorio.add(JInternalFrameTipoCopia.getInstancia());
             JInternalFrameTipoCopia.getInstancia().setVisible(true);
             // centrar
             JInternalFrameTipoCopia.getInstancia().setLocation(
-            (escritorio.getWidth() - JInternalFrameTipoCopia.getInstancia().getWidth())/2,
-            (escritorio.getHeight() - JInternalFrameTipoCopia.getInstancia().getWidth())/2
-            );
+                (escritorio.getWidth() - JInternalFrameTipoCopia.getInstancia().getWidth())/2,
+                (escritorio.getHeight() - JInternalFrameTipoCopia.getInstancia().getWidth())/2
+            );                
+            
+        
         }else{
             escritorio.setSelectedFrame(JInternalFrameTipoCopia.getInstancia());
         }

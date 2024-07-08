@@ -34,11 +34,5 @@ public class TipoCopia {
     public String toString() {
         return "TipoCopia{" + "idTipoCopia=" + idTipoCopia + ", nombreCopia=" + nombreCopia + '}';
     }
-        
     
-    
-    /*public static void main(String args[]){
-        TipoCopia tipo = new TipoCopia("hola");
-        System.out.println(tipo.toString());
-    }*/
 }
