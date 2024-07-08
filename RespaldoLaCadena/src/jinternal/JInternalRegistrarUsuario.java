@@ -92,7 +92,7 @@ public class JInternalRegistrarUsuario extends javax.swing.JInternalFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Password");
 
-        jComboBoxTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Usuario normal" }));
 
         javax.swing.GroupLayout jPanelPrincipalLayout = new javax.swing.GroupLayout(jPanelPrincipal);
         jPanelPrincipal.setLayout(jPanelPrincipalLayout);
@@ -164,9 +164,10 @@ public class JInternalRegistrarUsuario extends javax.swing.JInternalFrame {
         String correo = txtCorreo.getText();
         String contrase = txtPassword.getText();
         char estadoActivo ='A';
-        int codUsuarioDefault = 2;// no es administrador       
        
-        
+        int codUsuarioDefault = (jComboBoxTipoUsuario.getSelectedIndex())+1;
+
+      
         int confirmarGuardar = JOptionPane.showConfirmDialog(null,
                  "¿Estás seguro de que deseas agregar esta base de datos?",
                  "Confirmar",
@@ -179,7 +180,7 @@ public class JInternalRegistrarUsuario extends javax.swing.JInternalFrame {
             String sentencia = "INSERT INTO Usuario (usuario,correo,contrasena,estado,fechaRegistro,idTipoUsuario) VALUES (?,?,?,?,?,?)";
 
            
-            Object[] params = {usuario,correo,contrase,estadoActivo,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fechaActual),"1"};
+            Object[] params = {usuario,correo,contrase,estadoActivo,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fechaActual),codUsuarioDefault};
             Conexion.getInstancia().ejecutarActualizacionPreparedStatement(sentencia,params);
             
             //JOptionPane.showMessageDialog(null, "Base de datos agregada exitosamente.");

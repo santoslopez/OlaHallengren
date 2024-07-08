@@ -73,36 +73,34 @@ public class ManejadorDeUsuario {
         return mostrarUsuario;
     }
     
-    public Usuario iniciarSesion(String user,String password){
+    public Usuario iniciarSesion(String user,String password,int idTipoUsuario){
         Usuario usuario = null;
-        String query = "SELECT * FROM Usuario WHERE usuario=? AND contrasena=? AND idTipoUsuario=2";
+        String query = "SELECT * FROM Usuario WHERE usuario=? AND contrasena=? AND idTipoUsuario=?";
         
-        Object[] params={user,password};
+        Object[] params={user,password,idTipoUsuario};
+        
         ResultSet consulta = Conexion.getInstancia().hacerConsultaPreparedStatement(query,params);
         
-            if(consulta!=null){
-                try{  
-                    while(consulta.next()){
-                        char estado = consulta.getString("estado").charAt(0);
-                        usuario = new Usuario(
-                                consulta.getString("usuario"),
-                                consulta.getString("correo"),
-                                consulta.getString("contrasena"),
-                                estado
-                                
-                                
-                        );
-                        
-                    }                  
-                }catch(Exception ex){
-                    ex.printStackTrace();
-                }
-
-            }else{
-                usuario = null;
+        if(consulta!=null){
+            try{  
+                while(consulta.next()){
+                    char estado = consulta.getString("estado").charAt(0);
+                    usuario = new Usuario(
+                            consulta.getString("usuario"),
+                            consulta.getString("correo"),
+                            consulta.getString("contrasena"),
+                            estado,
+                            Integer.parseInt(consulta.getString("idTipoUsuario"))                                    
+                    );
+                }                  
+            }catch(Exception ex){
+                ex.printStackTrace();
             }
+        }else{
+            usuario = null;
+        }
 
-        
+       
         return usuario;
     }
 }

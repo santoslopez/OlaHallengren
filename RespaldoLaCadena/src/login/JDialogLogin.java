@@ -8,6 +8,7 @@ import bean.Usuario;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import main.JFrameMenuPrincipalUsuario;
 import main.MenuPrincipalJFrame;
 import manejador.ManejadorDeUsuario;
 
@@ -16,7 +17,9 @@ import manejador.ManejadorDeUsuario;
  * @author santoslopeztzoy
  */
 public class JDialogLogin extends javax.swing.JDialog {
-    private Usuario usuario = new Usuario();
+    private Usuario usuarioAdmin = new Usuario();
+    private Usuario usuarioNormal = new Usuario();
+
 
     private ImageIcon iconError = new ImageIcon("src/img/close.png");
     
@@ -142,10 +145,14 @@ public class JDialogLogin extends javax.swing.JDialog {
         // TODO add your handling code here:
         String user = txtNombreUsuario.getText();
         String password = jPasswordFieldPassword.getText();
-        usuario = ManejadorDeUsuario.getInstancia().iniciarSesion(user,password);
+        usuarioAdmin = ManejadorDeUsuario.getInstancia().iniciarSesion(user,password,1);
+        usuarioNormal = ManejadorDeUsuario.getInstancia().iniciarSesion(user,password,2);
 
-        if(usuario!=null){
+        if(usuarioAdmin!=null){
             MenuPrincipalJFrame.getInstancia().setVisible(true);
+            dispose();
+        }else if(usuarioNormal!=null){
+            JFrameMenuPrincipalUsuario.getInstancia().setVisible(true);
             dispose();
         }else{
             JOptionPane.showMessageDialog(null,"Usuario o password incorrectos.","Mensaje",JOptionPane.INFORMATION_MESSAGE,iconError);

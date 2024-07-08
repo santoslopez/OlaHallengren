@@ -88,7 +88,7 @@ public class Usuario {
 
     }
     
-    public Usuario(String nombreUsuario,String email,String password,char estado){
+    public Usuario(String nombreUsuario,String email,String password,char estado,int idTipoUsuario){
     //public Usuario(String nombreUsuario,String email,char estado,Date fechaRegistro,int idTipoUsuario){
 
         this.nombreUsuario=nombreUsuario;
@@ -96,7 +96,7 @@ public class Usuario {
         this.password=password;
         this.estado=estado;
         //this.fechaRegistro=fechaRegistro;
-        //this.idTipoUsuario=idTipoUsuario;
+        this.idTipoUsuario=idTipoUsuario;
 
     }
         
