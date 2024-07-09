@@ -49,6 +49,8 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
     int ancho = screenSize.width;
     int alto = screenSize.height;
        
+    int defaultRest = 300;
+
     //private JInternalDatabase j;
     /**
      * Creates new form MenuPrincipalJFrame
@@ -57,9 +59,10 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
         initComponents();
         
         // tamaño default
-        this.setSize(ancho-100,alto-100);
+        this.setSize(ancho-defaultRest,alto-defaultRest);
+
         
-// centrar
+        // centrar
         this.setLocationRelativeTo(null);
     }
 
