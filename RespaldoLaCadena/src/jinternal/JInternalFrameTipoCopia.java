@@ -5,6 +5,7 @@
 package jinternal;
 
 import db.Conexion;
+import db.Conexion;
 import javax.swing.JOptionPane;
 import modelo.ModeloTipoCopia;
 

@@ -1,13 +1,16 @@
+package db;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.Conexion to edit this template
  */
-package db;
+//package db;
 
 /**
  *
  * @author santoslopeztzoy
  */
+import java.io.File;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -40,7 +43,9 @@ public class Conexion {
         try{
             // Cargar el driver de JDBC de SQL Server
             //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+            //Class.forName("org.sqlite.JDBC").newInstance();
             Class.forName("org.sqlite.JDBC").newInstance();
+
         }catch(InstantiationException ex1){
            //ex1.printStackTrace();
             String mensaje="<html><body style='width: 300px;'>" +
@@ -61,8 +66,12 @@ public class Conexion {
            JOptionPane.showMessageDialog(null,mensaje, "Error: ", JOptionPane.ERROR_MESSAGE, iconError);
         }
         try{
-            conection = DriverManager.getConnection("jdbc:sqlite:src/DATABASE/DB.db");
+            //conection = DriverManager.getConnection("jdbc:sqlite:src/DATABASE/DB.db");
+            
+            //System.out.println("Estoy aquí: " + relativePath);
+            conection = DriverManager.getConnection("jdbc:sqlite:DB.db");
             statement = conection.createStatement();
+            //return conection;
         }catch(Exception exc){
             exc.printStackTrace();
         }

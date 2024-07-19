@@ -6,17 +6,26 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import javax.swing.JOptionPane;
 import jinternal.JInternalFrameCrearCopiaSeguridad;
 
 import java.time.LocalDate;
+import jinternal.JInternalEliminarArchivos;
 
 /**
  *
  * @author santoslopeztzoy
  */
 public class JFrameMenuPrincipalUsuario extends javax.swing.JFrame {
+    //String rutaBatEliminar = "C:\\Users\\tu_usuario\\Desktop\\proyecto\\archivo.bat";
+
+    //String rutaBatEliminar = "C:\\respaldo\\e.bat";
+
+    
+    //String rutaBatEliminar = "e.bat";
+
     // para obtener ancho y alto
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     
@@ -182,7 +191,19 @@ public class JFrameMenuPrincipalUsuario extends javax.swing.JFrame {
 
     private void jMenuItemEliminarCopiasAntiguasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarCopiasAntiguasActionPerformed
         // TODO add your handling code here:
-        
+        if(!escritorio.isAncestorOf(JInternalEliminarArchivos.getInstancia())){
+            escritorio.add(JInternalEliminarArchivos.getInstancia());
+            JInternalEliminarArchivos.getInstancia().setVisible(true);
+            // centrar
+            JInternalEliminarArchivos.getInstancia().setLocation(
+            (escritorio.getWidth() - JInternalEliminarArchivos.getInstancia().getWidth())/2,
+            (escritorio.getHeight() - JInternalEliminarArchivos.getInstancia().getWidth())/2
+            );
+         
+           
+        }else{
+            escritorio.setSelectedFrame(JInternalEliminarArchivos.getInstancia());
+        }      
     }//GEN-LAST:event_jMenuItemEliminarCopiasAntiguasActionPerformed
 
     /**

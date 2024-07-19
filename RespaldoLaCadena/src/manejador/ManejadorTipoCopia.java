@@ -9,6 +9,7 @@ package manejador;
  * @author santoslopeztzoy
  */
 import db.Conexion;
+import db.Conexion;
 import bean.TipoCopia;
 import java.util.ArrayList;
 import java.sql.DriverManager;

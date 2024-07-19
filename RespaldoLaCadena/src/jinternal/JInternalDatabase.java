@@ -1,5 +1,6 @@
 package jinternal;
 
+import db.Conexion;
 import bean.BaseDatos;
 import db.Conexion;
 import java.text.SimpleDateFormat;

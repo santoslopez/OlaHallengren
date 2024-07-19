@@ -9,6 +9,7 @@ package manejador;
  * @author santoslopeztzoy
  */
 
+import db.Conexion;
 import bean.BaseDatos;
 import db.Conexion;
 import java.util.Date;

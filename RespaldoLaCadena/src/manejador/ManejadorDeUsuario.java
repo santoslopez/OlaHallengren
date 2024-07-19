@@ -8,6 +8,7 @@ package manejador;
  *
  * @author santoslopeztzoy
  */
+import db.Conexion;
 import bean.Usuario;
 import db.Conexion;
 import java.util.ArrayList;

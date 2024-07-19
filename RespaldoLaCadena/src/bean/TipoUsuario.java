@@ -4,7 +4,6 @@
  */
 package bean;
 
-import db.Conexion;
 
 /**
  *

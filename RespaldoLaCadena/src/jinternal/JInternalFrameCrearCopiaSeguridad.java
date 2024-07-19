@@ -4,6 +4,11 @@
  */
 package jinternal;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,11 +19,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import main.MenuPrincipalJFrame;
 /**
  *
  * @author santoslopeztzoy
  */
 public class JInternalFrameCrearCopiaSeguridad extends javax.swing.JInternalFrame {
+    //String  = "m.bat";
+    String rutarMoverArchivos = "C:\\respaldo\\m.bat";
+
+    
+    ProcessBuilder procesoMoverArchivos = new ProcessBuilder("cmd", "/C",rutarMoverArchivos);
+
+    
     private ImageIcon icon = new ImageIcon("src/img/confirm.png");
         
     private ImageIcon iconError = new ImageIcon("src/img/close.png");
@@ -101,16 +116,40 @@ public class JInternalFrameCrearCopiaSeguridad extends javax.swing.JInternalFram
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static void checkFolderAccess(String folderPath) throws Exception {
+        File folder = new File(folderPath);
+
+        if (folder.exists()) {
+            if (folder.isDirectory()) {
+                File[] files = folder.listFiles();
+                if (files != null) {
+                    if (files.length > 0) {
+                        System.out.println("Archivos en la carpeta " + folderPath + ":");
+                        for (File file : files) {
+                            System.out.println(file.getName());
+                        }
+                    } else {
+                        System.out.println("La carpeta " + folderPath + " está vacía.");
+                    }
+                } else {
+                    throw new Exception("No se pudo listar los archivos en la carpeta.");
+                }
+            } else {
+                throw new Exception("La ruta especificada no es una carpeta.");
+            }
+        } else {
+            throw new Exception("La carpeta " + folderPath + " no existe.");
+        }
+    }
     private void jButtonGuardarCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarCopiaSeguridadActionPerformed
         // TODO add your handling code here:
         String url = "jdbc:sqlserver://192.168.1.15:1433;database=DANTAS;encrypt=false;";
-
         String user = "sa";
         String password = "Union2018";
         Connection conn = null;
         
-         Statement stmt = null;
-        
+        Statement stmt = null;
+         
         try {
             // Cargar el driver JDBC
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -119,13 +158,8 @@ public class JInternalFrameCrearCopiaSeguridad extends javax.swing.JInternalFram
             conn = DriverManager.getConnection(url,user,password);
             
             if(conn!=null && !conn.isClosed()){
-                JOptionPane.showMessageDialog(null,"xxxxxxx","Guardado",JOptionPane.INFORMATION_MESSAGE,icon);
 
                 stmt = conn.createStatement();
-
-                // Ruta del archivo de respaldo en macOS
-                String backupFileName = "backup.bak";
-                String backupFilePath = backupFileName;
 
                 Date date = new Date();
 
@@ -135,9 +169,8 @@ public class JInternalFrameCrearCopiaSeguridad extends javax.swing.JInternalFram
                 // Convertir date a String
                 String convertirFormatoEsperado = formato.format(date);
 
-
-                String nameBackup = "BACKUP"+convertirFormatoEsperado+"-.bak";
-
+                String nameBackup = convertirFormatoEsperado+"-.bak";
+             
                 int confirmarCopiaSeguridad = JOptionPane.showConfirmDialog(null, "Confirmar","¿Deseas continuar con el respaldo de base de datos?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
@@ -150,12 +183,44 @@ public class JInternalFrameCrearCopiaSeguridad extends javax.swing.JInternalFram
                     stmt.executeUpdate(backupSQL);
                     //System.out.println("Copia de seguridad completada exitosamente en macOS en " + backupFilePath);
 
-                    JOptionPane.showMessageDialog(null,"Copia de seguridad generado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE,icon);
 
-                    // Cerrar la conexión y el statement
-                    stmt.close();
-                    conn.close();    
-                    JInternalFrameCrearCopiaSeguridad.getInstancia().dispose();
+                    // Crear un proceso para correr un archivo .bat
+                    try {
+                        // TODO add your handling code here:
+
+                        // lanzar el proceso
+                        Process p = procesoMoverArchivos.start();
+                       int exitCode = p.waitFor();
+                       // antes p.waitFor
+                       // Destruir el proceso después de que termine
+                       
+                       p.destroy();
+                       
+
+                       // Cerrar la conexión y el statement
+                     
+                       //JInternalFrameCrearCopiaSeguridad.getInstancia().dispose();
+                       //JOptionPane.showMessageDialog(null,"Copia de seguridad generado correctamente en el servidor","Guardado",JOptionPane.INFORMATION_MESSAGE,icon);
+                        if (exitCode == 0) {
+                            JOptionPane.showMessageDialog(null, "Copia de seguridad generada correctamente en el servidor", "Guardado", JOptionPane.INFORMATION_MESSAGE, icon);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al generar la copia de seguridad. Código de salida: " + exitCode, "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MenuPrincipalJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(JInternalFrameCrearCopiaSeguridad.class.getName()).log(Level.SEVERE, null, ex);
+                    }finally{
+                        // Asegurarse de cerrar el statement y la conexión
+                        try {
+                            if (stmt != null) stmt.close();
+                            if (conn != null) conn.close();
+                        } catch (SQLException e) {
+                            Logger.getLogger(JInternalFrameCrearCopiaSeguridad.class.getName()).log(Level.SEVERE, null, e);
+                        } 
+                    }
+                               
                 }else{
                     JOptionPane.showMessageDialog(null,"Base de datos no se guardo","Error",JOptionPane.ERROR_MESSAGE,iconError);
                 }                
@@ -163,8 +228,6 @@ public class JInternalFrameCrearCopiaSeguridad extends javax.swing.JInternalFram
                 JOptionPane.showMessageDialog(null,"Erro no se pudo establecer la conexión con el servidor","Error",JOptionPane.ERROR_MESSAGE,iconError);
             }
             
-
-
         } catch (ClassNotFoundException e) {
             String mensaje="<html><body style='width: 300px;'>" +
                       "Se produjo el siguiente error: " + e.getMessage() +
@@ -180,6 +243,9 @@ public class JInternalFrameCrearCopiaSeguridad extends javax.swing.JInternalFram
             JOptionPane.showMessageDialog(null,mensaje,"Error SQLException",JOptionPane.ERROR_MESSAGE,iconError);
 
         }
+        //String sourceBackup = "C:\\Program Files\\Microsoft SQL Server\\MSSQL15.MSSQLSERVER\\MSSQL\\Backup\\";
+        //String destination = "\\\\lacadena\\hola";
+
     }//GEN-LAST:event_jButtonGuardarCopiaSeguridadActionPerformed
 
 

@@ -4,6 +4,7 @@
  */
 package jinternal;
 
+import db.Conexion;
 import bean.Usuario;
 import db.Conexion;
 import java.text.SimpleDateFormat;

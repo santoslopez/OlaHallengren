@@ -17,9 +17,13 @@ import jinternal.JInternalFrameListadoUsuarios;
 import jinternal.JInternalFrameTipoCopia;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import jinternal.JInternalFrameListadoCopias;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jinternal.JInternalEliminarArchivos;
 import jinternal.JInternalFrameListadoBaseDatos;
 
 /**
@@ -37,6 +41,12 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
     }
     
     
+    //String rutaBatEliminar = "C:\\ruta\\completa\\a\\tu\\archivo.bat";
+
+            
+    //ProcessBuilder procesoEliminarArchivos = new ProcessBuilder("cmd", "/C", rutaBatEliminar);
+    
+
     private ImageIcon icon = new ImageIcon("src/img/confirm.png");
     
     private ImageIcon iconError = new ImageIcon("src/img/close.png");
@@ -91,7 +101,7 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
         jMenuItemCrearCopiaSeguridad = new javax.swing.JMenuItem();
         jMenuItemEliminarCopiaSeguridad = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemCerrarSesion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu - Administrador");
@@ -202,7 +212,7 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
         jMenuCopiaSeguridad.add(jMenuItemCrearCopiaSeguridad);
 
         jMenuItemEliminarCopiaSeguridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
-        jMenuItemEliminarCopiaSeguridad.setText("Eliminar copias antiguas");
+        jMenuItemEliminarCopiaSeguridad.setText("Abrir ventana eliminar copias");
         jMenuItemEliminarCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemEliminarCopiaSeguridadActionPerformed(evt);
@@ -212,10 +222,15 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuCopiaSeguridad);
 
-        jMenu1.setText("PERFIL");
+        jMenu1.setText("Salir");
 
-        jMenuItem1.setText("Configuracion");
-        jMenu1.add(jMenuItem1);
+        jMenuItemCerrarSesion.setText("Cerrar sesión");
+        jMenuItemCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCerrarSesionActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemCerrarSesion);
 
         jMenuBar1.add(jMenu1);
 
@@ -295,60 +310,28 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
             (escritorio.getWidth() - JInternalFrameCrearCopiaSeguridad.getInstancia().getWidth())/2,
             (escritorio.getHeight() - JInternalFrameCrearCopiaSeguridad.getInstancia().getWidth())/2
             );
+         
+           
         }else{
             escritorio.setSelectedFrame(JInternalFrameCrearCopiaSeguridad.getInstancia());
         }
     }//GEN-LAST:event_jMenuItemCrearCopiaSeguridadActionPerformed
 
     private void jMenuItemEliminarCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarCopiaSeguridadActionPerformed
-        // TODO add your handling code here:
-            // Crear un objeto File que representa el directorio actual (donde se está ejecutando el programa)
-    // Especificar el directorio donde están las copias de seguridad (ruta de Windows)
-   // Especificar el directorio donde están las copias de seguridad (ruta de Windows sin secuencias de escape)
-    String windowsPath = """
-        C:\\Program Files\\Microsoft SQL Server\\MSSQL15.MSSQLSERVER\\MSSQL\\Backup\\
-        """;
-        
-        // Crear un objeto File con la ruta de Windows especificada
-    File dir = new File(windowsPath);
-    // Verificar que el directorio existe
-    if (!dir.exists()) {
-        System.out.println("El directorio especificado no existe: " + dir.getAbsolutePath());
-        return;
-    }
-
-    // Listar todos los archivos en el directorio especificado que terminan con ".bak"
-    File[] files = dir.listFiles((dir1, name) -> name.endsWith(".bak"));
-
-    // Verificar si se encontraron archivos
-    if (files == null || files.length == 0) {
-        System.out.println("No se encontraron archivos .bak en el directorio: " + dir.getAbsolutePath());
-        return;
-    }
-
-    // Calcular el tiempo límite para determinar qué archivos son más antiguos de 3 horas
-    long cutoff = System.currentTimeMillis() - TimeUnit.HOURS.toMillis(3);
-    System.out.println("Tiempo de corte: " + cutoff);
-
-    // Iterar a través de los archivos encontrados
-    for (File file : files) {
-        System.out.println("Revisando archivo: " + file.getName() + ", última modificación: " + file.lastModified());
-
-        // Verificar si la última modificación del archivo es anterior al tiempo límite
-        if (file.lastModified() < cutoff) {
-            // Intentar eliminar el archivo
-            if (file.delete()) {
-                // Imprimir un mensaje en la consola si el archivo fue eliminado exitosamente
-                System.out.println("Eliminado: " + file.getName());
-            } else {
-                // Imprimir un mensaje en la consola si el archivo no pudo ser eliminado
-                System.out.println("No se pudo eliminar: " + file.getName());
-            }
-        } else {
-            System.out.println("El archivo " + file.getName() + " no es más antiguo de 3 horas.");
+        if(!escritorio.isAncestorOf(JInternalEliminarArchivos.getInstancia())){
+            escritorio.add(JInternalEliminarArchivos.getInstancia());
+            JInternalEliminarArchivos.getInstancia().setVisible(true);
+            // centrar
+            JInternalEliminarArchivos.getInstancia().setLocation(
+            (escritorio.getWidth() - JInternalEliminarArchivos.getInstancia().getWidth())/2,
+            (escritorio.getHeight() - JInternalEliminarArchivos.getInstancia().getWidth())/2
+            );
+         
+           
+        }else{
+            escritorio.setSelectedFrame(JInternalEliminarArchivos.getInstancia());
         }
-    }
-    
+        
     }//GEN-LAST:event_jMenuItemEliminarCopiaSeguridadActionPerformed
 
     private void jMenuItemTipoCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTipoCopiaActionPerformed
@@ -364,6 +347,7 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
                 (escritorio.getHeight() - JInternalFrameTipoCopia.getInstancia().getWidth())/2
             );                
             
+            
         
         }else{
             escritorio.setSelectedFrame(JInternalFrameTipoCopia.getInstancia());
@@ -373,26 +357,6 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
 
     private void jMenuItemListadoCopiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListadoCopiasActionPerformed
         // TODO add your handling code here:
-        
-        /*String sentencia = "SELECT count(*) AS total FROM TipoCopia";
-        
-        try{
-            
-            PreparedStatement preparedStatement = Conexion.getInstancia().getConection().prepareStatement(sentencia);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            
-            if(resultSet.next()){
-                int count = resultSet.getInt("total");
-                if (count>0){
-
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "Actualmente no hay base de datos para mostrar","Listado de base de datos",JOptionPane.ERROR_MESSAGE,iconError);
-                }
-            }
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }*/
         JInternalFrameListadoCopias j = new JInternalFrameListadoCopias();
         if(!escritorio.isAncestorOf(j)){
             escritorio.add(j);
@@ -428,6 +392,16 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jMenuItemListadoBaseDatosActionPerformed
+
+    private void jMenuItemCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarSesionActionPerformed
+        // TODO add your handling code here:
+                
+        int confirmarSalir = JOptionPane.showConfirmDialog(null, "¿Quieres salir del programa?","Mensaje",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        
+        if(confirmarSalir==JOptionPane.YES_OPTION){
+            this.dispose();
+        }
+    }//GEN-LAST:event_jMenuItemCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -472,7 +446,7 @@ public class MenuPrincipalJFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuBaseDatos;
     private javax.swing.JMenu jMenuCopiaSeguridad;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemCerrarSesion;
     private javax.swing.JMenuItem jMenuItemCrearCopiaSeguridad;
     private javax.swing.JMenuItem jMenuItemEliminarCopiaSeguridad;
     private javax.swing.JMenuItem jMenuItemJinternalRegistrarUsuario;
